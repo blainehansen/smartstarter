@@ -1,6 +1,6 @@
 Schema = {};
 
-Projects = new Meteor.Collection('projects');
+Projects = new Meteor.Collection(null);
 Schema.Projects = new SimpleSchema({
 	description: {
 		type: String,
@@ -10,7 +10,7 @@ Schema.Projects = new SimpleSchema({
 });
 Projects.attachSchema(Schema.Projects);
 
-Pads = new Meteor.Collection('pads');
+Pads = new Meteor.Collection(null);
 Schema.Pads = new SimpleSchema({
 	description: {
 		type: String,
@@ -33,7 +33,7 @@ Schema.Pads = new SimpleSchema({
 });
 Pads.attachSchema(Schema.Pads);
 
-Cuts = new Meteor.Collection('cuts');
+Cuts = new Meteor.Collection(null);
 Schema.Cuts = new SimpleSchema({
 	description: {
 		type: String,
@@ -58,7 +58,7 @@ Schema.Cuts = new SimpleSchema({
 });
 Cuts.attachSchema(Schema.Cuts);
 
-Products = new Meteor.Collection('products');
+Products = new Meteor.Collection(null);
 Schema.Products = new SimpleSchema({
 	description: {
 		type: String,
@@ -89,7 +89,7 @@ Schema.Products = new SimpleSchema({
 Products.attachSchema(Schema.Products);
 
 
-Fixies = new Meteor.Collection('fixies');
+Fixies = new Meteor.Collection(null);
 Schema.Fixies = new SimpleSchema({
 	description: {
 		type: String,
@@ -113,7 +113,7 @@ Schema.Fixies = new SimpleSchema({
 });
 Fixies.attachSchema(Schema.Fixies);
 
-Scalies = new Meteor.Collection('scalies');
+Scalies = new Meteor.Collection(null);
 Schema.Scalies = new SimpleSchema({
 	description: {
 		type: String,
@@ -137,7 +137,7 @@ Schema.Scalies = new SimpleSchema({
 });
 Scalies.attachSchema(Schema.Scalies);
 
-Pricebreaks = new Meteor.Collection('pricebreaks');
+Pricebreaks = new Meteor.Collection(null);
 Schema.Pricebreaks = new SimpleSchema({
 	cost: {
 		type: Number,
@@ -160,5 +160,5 @@ Schema.Pricebreaks = new SimpleSchema({
 });
 Pricebreaks.attachSchema(Schema.Pricebreaks);
 
-Peries = new Meteor.Collection('peries');
+Peries = new Meteor.Collection(null);
 Peries.attachSchema(Schema.Fixies);

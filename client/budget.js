@@ -1,11 +1,24 @@
-SimpleSchema.debug = true;
-AutoForm.debug()
+// SimpleSchema.debug = true;
+// AutoForm.debug()
 
-AutoForm.addHooks(null, {
-	onError: function (name, error, template) {
-		console.log(name + " error:", error);
-	}
-});
+// AutoForm.addHooks(null, {
+// 	onError: function (name, error, template) {
+// 		console.log(name + " error:", error);
+// 	}
+// });
+
+Products.insert({_id: '1', description: 'Thing your project will make', minimumCount: 100});
+
+Fixies.insert({_id: '1', product_id: '1', description: 'Upfront cost that is the same no matter how many you make', cost: 500});
+
+Scalies.insert({_id: '1', product_id: '1', description: 'Cost that scales with the number created', minimumCost: 1000});
+
+Peries.insert({_id: '1', product_id: '1', description: 'Cost that you spend on every single thing you make', cost: 5});
+
+
+Pads.insert({description: 'Cushion', percentage: 5});
+Cuts.insert({description: 'Kickstarter and Card Fees', percentage: 10});
+
 
 Template.registerHelper('products', function () {
 	return Products.find({});
