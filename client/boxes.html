@@ -1,0 +1,23 @@
+<template name="costFormGroup">
+	<div class="form-group{{#if afFieldIsInvalid name=name}} has-error{{/if}}">
+		<div class="input-group">
+			<div class="input-group-addon">$</div>
+			{{> afFieldInput name=name placeholder="schemaLabel" label=false}}
+		</div>
+		{{#if afFieldIsInvalid name=name}}
+			<span class="help-block">{{afFieldMessage name=name}}</span>
+		{{/if}}
+	</div>
+</template>
+
+<template name="percentageFormGroup">
+	<div class="form-group{{#if afFieldIsInvalid name=name}} has-error{{/if}}">
+		<div class="input-group">
+			<div class="input-group-addon">%</div>
+			{{> afFieldInput name=name placeholder="schemaLabel" label=false}}
+		</div>
+		{{#if afFieldIsInvalid name=name}}
+			<span class="help-block">{{afFieldMessage name=name}}</span>
+		{{/if}}
+	</div>
+</template>

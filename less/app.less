@@ -1,0 +1,168 @@
+@import "../bootstrap/custom.bootstrap.import.less";
+@import "colors.import.less";
+
+
+// @app-dark-background-color
+// @app-less-dark-background-color
+
+// @app-light-background-color
+// @app-more-light-background-color
+
+// @app-purple-black-text-color
+// @app-green-black-text-color
+
+// @app-purple-white-text-color
+// @app-green-white-text-color
+
+// @app-purple-grey-text-color
+// @app-green-grey-text-color
+
+.form-inline {
+	display: inline;
+}
+
+.open-area {
+	cursor: pointer;
+}
+.close-area {
+	cursor: pointer;
+}
+.span-area {
+	.open-area();
+	padding: 2px;
+	border-radius: 3px;
+}
+.card-style-panel {
+	border: none;
+}
+.prompt-text {
+	color: @app-purple-grey-text-color;	
+}
+
+body {
+	background-color: @app-less-dark-background-color;
+}
+
+#header-box {
+	background-color: @app-dark-background-color;
+	border: none;
+	border-radius: 0px;
+	#page-title {
+		color: @app-purple-white-text-color;
+		// &:hover {
+		// 	color: @app-page-title-color-hover
+		// }
+	}
+	#page-tagline {
+		color: @app-purple-white-text-color;
+	}
+}
+#content-box {
+	padding: 0px 10%;
+}
+#footer-box {
+	background-color: @app-dark-background-color;
+	#footer-attribution {
+		.prompt-text();
+	}
+	#footer-feedback {
+		.prompt-text();
+	}
+}
+
+
+
+.page-nav {}
+
+.category-title {
+	color: @app-purple-white-text-color;
+}
+.category-box {
+	.card-style-panel();
+	background-color: @app-light-background-color;
+	.category-description {
+		color: @app-purple-black-text-color;
+	}
+	.category-information {
+		color: @app-purple-black-text-color;
+	}
+
+	.individual-title {
+		color: @app-purple-black-text-color;
+	}
+	.individual-box {
+		.card-style-panel();
+		background-color: @app-more-light-background-color;
+		&.open-area:hover {
+			background-color: darken(@app-more-light-background-color, 5%);
+		}
+		.individual-description {
+			color: @app-purple-black-text-color;
+		}
+		.individual-information {
+			color: @app-purple-black-text-color;
+		}
+		.individual-span {
+			.span-area();
+			.prompt-text();
+			background-color: @app-more-light-background-color;
+			&.open-area:hover {
+				background-color: darken(@app-more-light-background-color, 5%);
+			}
+		}
+	}
+	.individual-insert {
+		.card-style-panel();
+		.prompt-text();
+		background-color: @app-more-light-background-color;
+		&.open-area:hover {
+			background-color: darken(@app-more-light-background-color, 5%);
+		}
+	}
+
+	.category-suggested {
+		color: @app-purple-black-text-color;
+	}
+	.category-decided {
+		color: @app-purple-black-text-color;
+	}
+	.category-span {
+		.span-area();
+		background-color: @app-light-background-color;
+		&.open-area:hover {
+			background-color: darken(@app-light-background-color, 5%);
+		}
+	}
+}
+
+.category-insert {
+	.card-style-panel();
+	.prompt-text();
+	background-color: @app-light-background-color;
+	&.open-area:hover {
+		background-color: darken(@app-light-background-color, 5%);
+	}
+}
+
+#goal-title {
+	color: @app-green-white-text-color;
+}
+#goal-box {
+	.card-style-panel();
+	background-color: @app-light-background-color;
+	#goal-baseline {
+		color: @app-purple-black-text-color;
+	}
+	.modifier-box {
+		margin: 0px 5%;
+		padding: 5px;
+		border-radius: 3px;
+		.close {
+			position: static;
+		}
+		&.open-area:hover {
+			background-color: darken(@app-light-background-color, 5%);
+		}
+	}
+	// #goal-final {}
+}

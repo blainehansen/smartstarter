@@ -1,0 +1,162 @@
+template(name="productDescriptionBox")
+	+clickToEdit(contextId="productDescriptionForm" contextCollection="Products")
+		+autoForm(id="productDescriptionForm" collection="Products" doc=this type="update" class="form-inline")
+			+afFormGroup(name="description" placeholder="schemaLabel" label=false)
+	else
+		span.category-span.open-area #{description}
+
+template(name="decidedChargeBox")
+	+clickToEdit(contextId=decidedChargeBoxForm contextCollection="Products")
+		+autoForm(id=decidedChargeBoxForm collection="Products" doc=this type="update" class="form-inline")
+			+costFormGroup(name="decidedCharge")
+	else
+		span.category-span.open-area
+			if exists decidedCharge
+				span {{dollars decidedCharge}}
+			else
+				span.prompt-text You haven't decided anything yet.
+
+template(name="minimumCountBox")
+	+clickToEdit(contextId="minimumCountForm" contextCollection="Products")
+		+autoForm(id="minimumCountForm" collection="Products" doc=this type="update" class="form-inline")
+			+afFormGroup(name="minimumCount" placeholder="schemaLabel" label=false)
+
+		if exists minimumCount
+			a.delete-minimum-count.close-area.prompt-text(data-id=_id) Delete minimum count.
+	else
+		span.category-span.open-area
+			if exists minimumCount
+				span {{minimumCount}}
+			else
+				span.prompt-text Set a minimum count.
+
+template(name="insertProduct")
+	+clickToEdit(contextId="insertProductForm" contextCollection="Products")
+		.panel.panel-default.category-insert
+			.panel-body
+				+autoForm(id="insertProductForm" collection="Products" type="insert")
+					+afFormGroup(name="description" placeholder="schemaLabel" label=false)
+					+afFormGroup(name="minimumCount" placeholder="schemaLabel" label=false)
+	else
+		.panel.panel-default.category-insert.open-area
+			.panel-body
+				| Add a product...
+
+
+
+
+
+template(name="fixieBox")
+	+clickToEdit(contextId=_id contextCollection="Fixies")
+		.panel.panel-default.individual-box
+			.panel-body
+				+autoForm(id=_id collection="Fixies" doc=this type="update")
+					+afFormGroup(name="description" placeholder="schemaLabel" label=false)
+					+costFormGroup(name="cost")
+	else
+		.panel.panel-default.individual-box.open-area
+			.panel-body
+				+quickRemoveButton(collection="Fixies" _id=_id class="close")
+					span &times;
+				p
+					strong {{description}}
+				p {{dollars cost}}
+
+template(name="insertFixie")
+	+clickToEdit(contextId="insertFixie" contextCollection="Fixies" keepOpenOnSubmit=true)
+		.panel.panel-default.individual-insert
+			.panel-body
+				+autoForm(id="insertFixie" collection="Fixies" type="insert" resetOnSuccess=true)
+					+afFormGroup(class="first-input" name="description" placeholder="schemaLabel" label=false)
+					+costFormGroup(name="cost")
+					+afFormGroup(name="product_id" type="hidden" label=false value=_id)
+	else
+		.panel.panel-default.individual-insert.open-area
+			.panel-body
+				| Add a Fixed Cost...
+
+
+
+template(name="scalieBox")
+	+clickToEdit( contextId=_id contextCollection="Scalies")
+		.panel.panel-default.individual-box
+			.panel-body
+				+autoForm(id=_id collection="Scalies" doc=this type="update")
+					+afFormGroup(name="description" placeholder="schemaLabel" label=false)
+					+costFormGroup(name="minimumCost")
+
+				ul
+					each pricebreaks
+						+clickToEdit(contextId=priceBreakFormId contextCollection="Pricebreaks")
+							+autoForm(id=priceBreakFormId collection="Pricebreaks" doc=this type="update" class="form-inline")
+								+afFormGroup(name="count" placeholder="schemaLabel" label=false)
+								+costFormGroup(name="cost")
+						else
+							li.individual-span.open-area {{count}}:
+								span {{dollars cost}}
+								+quickRemoveButton(collection="Pricebreaks" _id=_id class="close")
+									span &times;
+
+				+clickToEdit(contextId=insertPriceBreakId contextCollection="Scalies" keepOpenOnSubmit=true)
+					+autoForm(id=insertPriceBreakId collection="Pricebreaks" type="insert" resetOnSuccess=true)
+						+afFormGroup(class="first-input" name="count" placeholder="schemaLabel" label=false)
+						+costFormGroup(name="cost")
+						+afFormGroup(name="scalie_id" type="hidden" label=false value=_id)
+				else
+					.individual-span.open-area Add a new Price Break...
+	else
+		.panel.panel-default.individual-box.open-area
+			.panel-body
+				+quickRemoveButton(collection="Scalies" _id=_id class="close")
+					span &times;
+				p
+					strong {{description}}
+				p {{dollars minimumCost}}
+				ul
+					each pricebreaks
+						li {{count}}:
+							span {{dollars cost}}
+
+template(name="insertScalie")
+	+clickToEdit(contextId="insertScalie" contextCollection="Scalies" keepOpenOnSubmit=true)
+		.panel.panel-default.individual-insert
+			.panel-body
+				+autoForm(id="insertScalie" collection="Scalies" type="insert" resetOnSuccess=true)
+					+afFormGroup(class="first-input" name="description" placeholder="schemaLabel" label=false)
+					+afFormGroup(name="minimumCost" placeholder="schemaLabel" label=false)
+					+afFormGroup(name="product_id" type="hidden" label=false value=_id)
+	else
+		.panel.panel-default.individual-insert.open-area
+			.panel-body
+				| Add a Scaling Cost...
+
+
+
+template(name="perieBox")
+	+clickToEdit(contextId=_id contextCollection="Peries")
+		.panel.panel-default.individual-box
+			.panel-body
+				+autoForm(id=_id collection="Peries" doc=this type="update")
+					+afFormGroup(class="first-input" name="description" placeholder="schemaLabel" label=false)
+					+costFormGroup(name="cost")
+	else
+		.panel.panel-default.individual-box.open-area
+			.panel-body
+				+quickRemoveButton(collection="Peries" _id=_id class="close")
+					span &times;
+				p
+					strong {{description}}
+				p {{dollars cost}}
+
+template(name="insertPerie")
+	+clickToEdit(contextId="insertPerie" contextCollection="Peries" keepOpenOnSubmit=true)
+		.panel.panel-default.individual-insert
+			.panel-body
+				+autoForm(id="insertPerie" collection="Peries" type="insert" resetOnSuccess=true)
+					+afFormGroup(class="first-input" name="description" placeholder="schemaLabel" label=false)
+					+costFormGroup(name="cost")
+					+afFormGroup(name="product_id" type="hidden" label=false value=_id)
+	else
+		.panel.panel-default.individual-insert.open-area
+			.panel-body
+				| Add a Per Item Cost...

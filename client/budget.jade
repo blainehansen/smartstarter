@@ -1,0 +1,159 @@
+head
+	title budgetstarter
+
+body
+	.container-fluid
+		.row
+			.col-xs-12#header-box.text-center
+				h2#page-title smartstarter |
+					small#page-tagline safe, sane, crowdfunding budgets.
+
+			//- .col-xs-12
+			//- 	ul.nav.nav-pills
+			//- 		li.presentation
+			//- 			a(href="") How does this work?
+			//- 		li.presentation
+			//- 			a(href="") 
+
+			.col-xs-12
+				#content-box
+					h1.category-title Products
+					each products
+						.panel.panel-default.category-box
+							.panel-body
+								+product this
+
+					+insertProduct
+
+					h1#goal-title Goal
+					#goal-box.panel.panel-default
+						.panel-body
+							+goal
+							
+
+			.col-xs-12#footer-box.panel-body.text-center
+				span#footer-attribution
+					a(href="http://blainehansenpiano.com") Blaine Hansen
+				span#footer-feedback | thoughts or feedback: faichenshing@gmail.com
+
+
+template(name="goal")
+	if session "invalidDecidedCharge"
+		h3.text-danger This budget doesn't work.
+	else if exists baselineGoal
+		.col-xs-12
+			h3#goal-baseline
+				span.prompt-text Baseline Goal:
+				span {{baselineGoal}}
+
+		.col-sm-6
+			h4 Padding
+
+			each pads
+				+clickToEdit(contextId=_id contextCollection="Pads")
+					.modifier-box
+						+autoForm(id=_id collection="Pads" doc=this type="update")
+							+afFormGroup(name="description" placeholder="schemaLabel" label=false)
+							+percentageFormGroup(name="percentage")
+				else
+					.modifier-box.open-area 
+						span {{description}}: {{percent percentage}}
+							+quickRemoveButton(collection="Pads" _id=_id class="close")
+								span &times;
+
+			+clickToEdit(contextId="insertPad" contextCollection="Pads" keepOpenOnSubmit=true)
+				.modifier-box
+					+autoForm(id="insertPad" collection="Pads" type="insert" resetOnSuccess=true)
+						+afFormGroup(class="first-input" name="description" placeholder="schemaLabel" label=false)
+						+percentageFormGroup(name="percentage")
+			else
+				.modifier-box.open-area Add a Pad...
+
+		.col-sm-6
+			h4 Cuts
+
+			each cuts
+				+clickToEdit(contextId=_id contextCollection="Cuts")
+					.modifier-box
+						+autoForm(id=_id collection="Cuts" doc=this type="update")
+							+afFormGroup(name="description" placeholder="schemaLabel" label=false)
+							+percentageFormGroup(name="percentage")
+				else
+					.modifier-box.open-area
+						span {{description}}: {{percent percentage}}
+							+quickRemoveButton(collection="Cuts" _id=_id class="close")
+								span &times;
+
+			if session "invalidCuts"
+				p.text-danger Your cuts are more than 100%!
+
+			+clickToEdit(contextId="insertCut" contextCollection="Cuts" keepOpenOnSubmit=true)
+				.modifier-box
+					+autoForm(id="insertCut" collection="Cuts" type="insert" resetOnSuccess=true)
+						+afFormGroup(class="first-input" name="description" placeholder="schemaLabel" label=false)
+						+percentageFormGroup(name="percentage")
+			else
+				.modifier-box.open-area Add a Cut...
+
+		.col-sm-6
+			h3#goal-padded
+				span.prompt-text Padded Goal:
+				span {{paddedGoal}}
+
+		.col-sm-6
+			if exists finalGoal
+				h3#goal-final
+					span.prompt-text Final Goal:
+					span {{finalGoal}}
+			else
+				h3.text-danger Your cuts don't work.
+	else
+		h3.prompt-text Not enough information yet.
+			
+template(name="product")
+	.col-xs-12
+		+quickRemoveButton(collection="Products" _id=_id class="close")
+			span &times;
+		h3.category-description
+			span.category-span
+				+productDescriptionBox
+			small.category-information
+				+minimumCountBox
+	.col-sm-4
+		h4.individual-title Fixed Costs
+		each fixies
+			+fixieBox
+
+		+insertFixie this
+
+	.col-sm-4
+		h4.individual-title Scaling Costs
+
+		if exists minimumCount
+			each scalies
+				+scalieBox
+
+			+insertScalie this
+
+		else
+			p.prompt-text You can't have Scaling Costs without knowing how many you're going to make!
+
+	.col-sm-4
+		h4.individual-title Per Item Costs
+		each peries
+			+perieBox
+
+		+insertPerie this
+
+	.col-xs-12
+		p.text-right
+			span.category-suggested
+				span.prompt-text Minimum charge:
+				span {{dollars minimumCharge}}
+
+			span.category-decided
+				span.prompt-text Decided charge:
+				span.category-span {{> decidedChargeBox}}
+
+		if decidedChargeInvalid
+			p.text-danger.text-right You're going to lose money on this thing.
