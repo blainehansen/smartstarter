@@ -29,7 +29,7 @@ Template.registerHelper('uniqueId', function () {
 });
 
 var existsFunc = function (value) {
-	return (value != undefined) && (value != null);
+	return (value != undefined) && (value != null) && (isFinite(value));
 };
 
 
@@ -150,14 +150,21 @@ var getProjectRatio = function (projectId) {
 		ratios.push(getProductRatio(product._id));
 	});
 
+	console.log(ratios)
+	console.log(!ratios)
+
 	if (!ratios) throw "No ratios";
 	return _.max(ratios);
 };
 
 Session.setDefault('invalidCuts', false);
 Template.goal.created = function () {
-	this._baselineGoal = new ReactiveVar(null);
-	this._paddedGoal = new ReactiveVar(null);
+	var goalCompFunc = function (oldVal, newVal) {
+		if (!existsFunc(oldVal) && !existsFunc(newVal)) return true;
+		else return oldVal == newVal;
+	};
+	this._baselineGoal = new ReactiveVar(null, goalCompFunc);
+	this._paddedGoal = new ReactiveVar(null, goalCompFunc);
 };
 Template.goal.helpers({
 	pads: function () {
@@ -169,12 +176,16 @@ Template.goal.helpers({
 		return Cuts.find();
 	},
 	baselineGoal: function () {
+		console.log('baseline')
+
 		var projectId = null;
 		// var projectId = this.projectId;
 		try {
 			var ratio = getProjectRatio(projectId);
+			console.log('ratio' + ratio)
 		}
 		catch (error) {
+			console.log('error')
 			return null;
 		}
 
@@ -182,7 +193,8 @@ Template.goal.helpers({
 		var scalingCosts = getProjectScalingTotal(projectId);
 
 		Template.instance()._baselineGoal.set((fixedCosts + scalingCosts) * (1 + ratio));
-		return "$" + Math.ceil(Template.instance()._baselineGoal.get());
+		console.log(Math.ceil(Template.instance()._baselineGoal.get()))
+		return Math.ceil(Template.instance()._baselineGoal.get());
 	},
 	paddedGoal: function () {
 		var base = Template.instance()._baselineGoal.get();
@@ -197,7 +209,7 @@ Template.goal.helpers({
 
 		var give = base * (1 + totalPad);
 		Template.instance()._paddedGoal.set(give);
-		return "$" + Math.ceil(give);
+		return Math.ceil(give);
 	},
 	finalGoal: function () {
 		var padded = Template.instance()._paddedGoal.get();
@@ -217,7 +229,7 @@ Template.goal.helpers({
 		else Session.set('invalidCuts', false);
 
 		give = padded / (1 - totalCut);
-		return "$" + Math.ceil(give);
+		return Math.ceil(give);
 	}
 });
 
